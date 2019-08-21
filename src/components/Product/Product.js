@@ -61,8 +61,8 @@ const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
   };
   const menu = (
     <Menu onClick={hanleProductMenuClick}>
-      <Menu.Item key="delete">Delete</Menu.Item>
       <Menu.Item key="set-price">Set new price</Menu.Item>
+      <Menu.Item key="delete">Delete</Menu.Item>
     </Menu>
   );
   return (
