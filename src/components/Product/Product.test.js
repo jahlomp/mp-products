@@ -4,6 +4,6 @@ import Product from "./Product";
 
 it("renders without crashing", () => {
   const div = document.createElement("div");
-  ReactDOM.render(<Product />, div);
+  ReactDOM.render(<Product id={0} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

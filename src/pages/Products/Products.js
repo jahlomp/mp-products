@@ -10,6 +10,7 @@ import {
 } from "../../store/products/actions";
 import Product from "../../components/Product/Product";
 import AddProductModal from "../../components/AddProductModal/AddProductModal";
+import AddProductForm from "../../components/AddProductForm/AddProductForm";
 
 const Products = ({
   fetchProducts,
@@ -19,8 +20,6 @@ const Products = ({
   setProductNewPrice,
   addProduct
 }) => {
-  let formRef = null;
-
   const [showAddProductModalState, setShowAddProductModalState] = useState(
     false
   );
@@ -36,21 +35,11 @@ const Products = ({
     setShowAddProductModalState(false);
   };
 
-  const handleCreate = () => {
-    const { form } = formRef.props;
+  const handleAdd = values => {
+    addProduct(values.name, values.latestPrice);
+    setShowAddProductModalState(false);
+  };
 
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      addProduct(values.name, values.latestPrice);
-      form.resetFields();
-      setShowAddProductModalState(false);
-    });
-  };
-  const addFormRef = ref => {
-    formRef = ref;
-  };
   return (
     <Layout>
       <Layout.Content className="main-layout">
@@ -90,11 +79,11 @@ const Products = ({
         )}
       </Layout.Content>
       <AddProductModal
-        wrappedComponentRef={addFormRef}
         visible={showAddProductModalState}
         onCancel={handleCancel}
-        onCreate={handleCreate}
-      />
+      >
+        <AddProductForm addProduct={handleAdd} />
+      </AddProductModal>
     </Layout>
   );
 };

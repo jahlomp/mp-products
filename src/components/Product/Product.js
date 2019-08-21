@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Card, Button, Dropdown, Menu, Modal } from "antd";
 import PropTypes from "prop-types";
 import SetProductNewPriceModal from "../SetProductNewPriceModal/SetProductNewPriceModal";
+import SetProductNewPriceForm from "../SetProductNewPriceForm/SetProductNewPriceForm";
 
 const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
-  let setPriceForm = null;
-
   const [
     showSetProductPriceModalState,
     setShowSetProductPriceModalState
@@ -17,20 +16,9 @@ const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
     setShowSetProductPriceModalState(false);
   };
 
-  const handleCreate = () => {
-    const { form } = setPriceForm.props;
-
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      setProductNewPrice(id, values.newPrice);
-      form.resetFields();
-      setShowSetProductPriceModalState(false);
-    });
-  };
-  const setPriceFormModal = ref => {
-    setPriceForm = ref;
+  const handleSetNewPrice = values => {
+    setProductNewPrice(id, values.newPrice);
+    setShowSetProductPriceModalState(false);
   };
 
   const handleDeleteProduct = id => {
@@ -80,18 +68,17 @@ const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
       </Card>
 
       <SetProductNewPriceModal
-        wrappedComponentRef={setPriceFormModal}
         visible={showSetProductPriceModalState}
         onCancel={handleCancel}
-        onCreate={handleCreate}
         productName={name}
-      />
+      >
+        <SetProductNewPriceForm setNewPrice={handleSetNewPrice} />
+      </SetProductNewPriceModal>
     </>
   );
 };
 
 Product.defaultProps = {
-  id: "",
   name: "",
   price: 0.0,
   deleteProduct: () => {},
