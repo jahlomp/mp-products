@@ -1,15 +1,23 @@
-.em-loader-wrapper {
+.mp-loader-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 75vh;
 
-  .em-loader {
-    border: 2px solid @primary-color;
+  .mp-loader {
+    border: 2px solid #000000;
     border-top: 2px solid transparent;
     border-radius: 50%;
     width: 30px;
     height: 30px;
     animation: spin 0.5s linear infinite;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }

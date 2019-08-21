@@ -10,10 +10,10 @@ import {
 export const fetchProducts = () => {
   return dispatch => {
     dispatch({ type: FETCH_PRODUCTS });
-    const products = JSON.parse(localStorage.getItem("mproucts"));
+    const products = JSON.parse(localStorage.getItem("mproducts"));
 
-    if (products) {
-      dispatch({ type: FETCH_PRODUCTS_SUCCESS });
+    if (Array.isArray(products)) {
+      dispatch({ type: FETCH_PRODUCTS_SUCCESS, products });
     } else {
       axios({
         method: "GET",
@@ -25,10 +25,13 @@ export const fetchProducts = () => {
       })
         .then(response => {
           localStorage.setItem(
-            "mproucts",
+            "mproducts",
             JSON.stringify(response.data && response.data.products)
           );
-          dispatch({ type: FETCH_PRODUCTS_SUCCESS });
+          dispatch({
+            type: FETCH_PRODUCTS_SUCCESS,
+            products: response.data && response.data.products
+          });
         })
         .catch(error => {
           notification.error({
@@ -39,4 +42,70 @@ export const fetchProducts = () => {
         });
     }
   };
+};
+
+export const deleteProduct = id => {
+  return dispatch => {
+    remove(id).then(() => {
+      const products = JSON.parse(localStorage.getItem("mproducts")) || [];
+      dispatch({ type: FETCH_PRODUCTS_SUCCESS, products });
+    });
+  };
+};
+
+export const addProduct = (name, latestPrice) => {
+  return dispatch => {
+    add(name, latestPrice).then(() => {
+      const products = JSON.parse(localStorage.getItem("mproducts")) || [];
+      dispatch({ type: FETCH_PRODUCTS_SUCCESS, products });
+    });
+  };
+};
+
+export const setProductNewPrice = (id, price, date) => {
+  return dispatch => {
+    // const products = JSON.parse(localStorage.getItem("mproducts")) || [];
+    // const otherProducts = products.filter(product => product.id !== id);
+    // dispatch({ type: SET_PRODUCT_NEW_PRICE, id, price, date });
+  };
+};
+
+const remove = id => {
+  return new Promise((resolve, reject) => {
+    try {
+      const products = JSON.parse(localStorage.getItem("mproducts")) || [];
+      const otherProducts = products.filter(product => product.id !== id);
+
+      localStorage.setItem(
+        "mproducts",
+        otherProducts.length < 1 ? null : JSON.stringify(otherProducts)
+      );
+      resolve(true);
+    } catch (error) {
+      reject(false);
+    }
+  });
+};
+
+const add = (name, latestPrice) => {
+  return new Promise((resolve, reject) => {
+    try {
+      let products = JSON.parse(localStorage.getItem("mproducts")) || [];
+      products.push({
+        id: products.length + 1,
+        name,
+        prices: [
+          {
+            id: 1,
+            price: parseFloat(latestPrice),
+            date: new Date()
+          }
+        ]
+      });
+      localStorage.setItem("mproducts", JSON.stringify(products));
+      resolve(true);
+    } catch (error) {
+      reject(false);
+    }
+  });
 };
