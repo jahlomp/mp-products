@@ -1,18 +1,18 @@
 import React from "react";
 import { Modal, Form, Input } from "antd";
 
-const AddProductModal = Form.create({ name: "add_product_modal" })(
+const SetProductNewPriceModal = Form.create({ name: "set_product_new_price" })(
   // eslint-disable-next-line
   class extends React.Component {
     render() {
-      const { visible, onCancel, onCreate, form } = this.props;
+      const { visible, onCancel, onCreate, form, productName } = this.props;
       const { getFieldDecorator } = form;
 
       return (
         <Modal
           visible={visible}
-          title="Add a new product"
-          okText="Add"
+          title={`Set new price for ${productName}`}
+          okText="Set"
           onCancel={onCancel}
           onOk={onCreate}
           destroyOnClose={true}
@@ -20,25 +20,15 @@ const AddProductModal = Form.create({ name: "add_product_modal" })(
           centered
         >
           <Form layout="vertical">
-            <Form.Item label="Name">
-              {getFieldDecorator("name", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please provide the name of the product!"
-                  }
-                ]
-              })(<Input autoFocus />)}
-            </Form.Item>
-            <Form.Item label="Latest Price">
-              {getFieldDecorator("latestPrice", {
+            <Form.Item label="New Price">
+              {getFieldDecorator("newPrice", {
                 rules: [
                   {
                     required: true,
                     message: "Please provide the latest price of the product!"
                   }
                 ]
-              })(<Input type="number" step="0.01" />)}
+              })(<Input type="number" autoFocus step="0.01" />)}
             </Form.Item>
           </Form>
         </Modal>
@@ -46,4 +36,4 @@ const AddProductModal = Form.create({ name: "add_product_modal" })(
     }
   }
 );
-export default AddProductModal;
+export default SetProductNewPriceModal;

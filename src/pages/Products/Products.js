@@ -9,7 +9,7 @@ import {
   addProduct
 } from "../../store/products/actions";
 import Product from "../../components/Product/Product";
-import CreateProductModal from "../../components/AddProductModal/AddProductModal";
+import AddProductModal from "../../components/AddProductModal/AddProductModal";
 
 const Products = ({
   fetchProducts,
@@ -89,7 +89,7 @@ const Products = ({
           </Row>
         )}
       </Layout.Content>
-      <CreateProductModal
+      <AddProductModal
         wrappedComponentRef={addFormRef}
         visible={showAddProductModalState}
         onCancel={handleCancel}
@@ -113,8 +113,8 @@ const mapDispatchToProps = dispatch => {
     deleteProduct: id => {
       dispatch(deleteProduct(id));
     },
-    setProductNewPrice: (id, price, date) => {
-      dispatch(setProductNewPrice(id, price, date));
+    setProductNewPrice: (id, price) => {
+      dispatch(setProductNewPrice(id, price));
     },
     addProduct: (name, latestPrice) => {
       dispatch(addProduct(name, latestPrice));

@@ -62,11 +62,12 @@ export const addProduct = (name, latestPrice) => {
   };
 };
 
-export const setProductNewPrice = (id, price, date) => {
+export const setProductNewPrice = (id, price) => {
   return dispatch => {
-    // const products = JSON.parse(localStorage.getItem("mproducts")) || [];
-    // const otherProducts = products.filter(product => product.id !== id);
-    // dispatch({ type: SET_PRODUCT_NEW_PRICE, id, price, date });
+    setNewPrice(id, price).then(() => {
+      const products = JSON.parse(localStorage.getItem("mproducts")) || [];
+      dispatch({ type: FETCH_PRODUCTS_SUCCESS, products });
+    });
   };
 };
 
@@ -103,6 +104,34 @@ const add = (name, latestPrice) => {
         ]
       });
       localStorage.setItem("mproducts", JSON.stringify(products));
+      resolve(true);
+    } catch (error) {
+      reject(false);
+    }
+  });
+};
+
+const setNewPrice = (id, price) => {
+  return new Promise((resolve, reject) => {
+    try {
+      let products = JSON.parse(localStorage.getItem("mproducts")) || [];
+      const currectProduct = products.find(product => product.id === id);
+      const idx = products.indexOf(currectProduct);
+
+      const { prices } = currectProduct;
+      const newPrices = [
+        ...prices,
+        {
+          id: prices.length + 1,
+          price: parseFloat(price),
+          date: new Date()
+        }
+      ];
+
+      products[idx] = { ...currectProduct, prices: newPrices };
+
+      localStorage.setItem("mproducts", JSON.stringify(products));
+
       resolve(true);
     } catch (error) {
       reject(false);

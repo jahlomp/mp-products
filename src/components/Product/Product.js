@@ -1,8 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Button, Dropdown, Menu, Modal } from "antd";
 import PropTypes from "prop-types";
+import SetProductNewPriceModal from "../SetProductNewPriceModal/SetProductNewPriceModal";
 
 const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
+  let setPriceForm = null;
+
+  const [
+    showSetProductPriceModalState,
+    setShowSetProductPriceModalState
+  ] = useState(false);
+  const showSetProductPriceModal = () => {
+    setShowSetProductPriceModalState(true);
+  };
+  const handleCancel = () => {
+    setShowSetProductPriceModalState(false);
+  };
+
+  const handleCreate = () => {
+    const { form } = setPriceForm.props;
+
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      setProductNewPrice(id, values.newPrice);
+      form.resetFields();
+      setShowSetProductPriceModalState(false);
+    });
+  };
+  const setPriceFormModal = ref => {
+    setPriceForm = ref;
+  };
+
   const handleDeleteProduct = id => {
     Modal.confirm({
       title: `Are you sure you want to delete "${name}"?`,
@@ -13,7 +43,9 @@ const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
       okButtonProps: { type: "danger" }
     });
   };
-  const handleSetProductNewPrice = id => {};
+  const handleSetProductNewPrice = () => {
+    showSetProductPriceModal(true);
+  };
 
   const hanleProductMenuClick = ({ key }) => {
     switch (key) {
@@ -34,17 +66,27 @@ const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
     </Menu>
   );
   return (
-    <Card
-      title={name}
-      bordered={false}
-      extra={
-        <Dropdown overlay={menu} trigger={["click"]}>
-          <Button type="link" icon="more" />
-        </Dropdown>
-      }
-    >
-      Price: {price}
-    </Card>
+    <>
+      <Card
+        title={name}
+        bordered={false}
+        extra={
+          <Dropdown overlay={menu} trigger={["click"]}>
+            <Button type="link" icon="more" />
+          </Dropdown>
+        }
+      >
+        Price: {price}
+      </Card>
+
+      <SetProductNewPriceModal
+        wrappedComponentRef={setPriceFormModal}
+        visible={showSetProductPriceModalState}
+        onCancel={handleCancel}
+        onCreate={handleCreate}
+        productName={name}
+      />
+    </>
   );
 };
 
