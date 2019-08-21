@@ -19,8 +19,7 @@ const Products = ({ fetchProducts, products }) => {
 
         <Row gutter={16}>
           {products &&
-            products.products &&
-            [].concat(products.products).map((product, index) => (
+            [].concat(products).map((product, index) => (
               <Col
                 key={index}
                 xs={24}
@@ -30,7 +29,7 @@ const Products = ({ fetchProducts, products }) => {
                 xl={4}
                 className="product-column"
               >
-                <Product name={product.name} />
+                <Product name={product.name} prices={product.prices} />
               </Col>
             ))}
         </Row>

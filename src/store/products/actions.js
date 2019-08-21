@@ -10,23 +10,33 @@ import {
 export const fetchProducts = () => {
   return dispatch => {
     dispatch({ type: FETCH_PRODUCTS });
-    axios({
-      method: "GET",
-      url: `${API_URL}/5c3e15e63500006e003e9795`,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => {
-        dispatch({ type: FETCH_PRODUCTS_SUCCESS, payload: response.data });
+    const products = JSON.parse(localStorage.getItem("mproucts"));
+
+    if (products) {
+      dispatch({ type: FETCH_PRODUCTS_SUCCESS });
+    } else {
+      axios({
+        method: "GET",
+        url: `${API_URL}/5c3e15e63500006e003e9795`,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
       })
-      .catch(error => {
-        notification.error({
-          message: "Get Products Error",
-          description: "An error occured when getting products"
+        .then(response => {
+          localStorage.setItem(
+            "mproucts",
+            JSON.stringify(response.data && response.data.products)
+          );
+          dispatch({ type: FETCH_PRODUCTS_SUCCESS });
+        })
+        .catch(error => {
+          notification.error({
+            message: "Get Products Error",
+            description: "An error occured when getting products"
+          });
+          dispatch({ type: FETCH_PRODUCTS_FAILED });
         });
-        dispatch({ type: FETCH_PRODUCTS_FAILED });
-      });
+    }
   };
 };

@@ -1,7 +1,7 @@
-import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
-import { createBrowserHistory } from 'history';
-import { routerMiddleware } from 'connected-react-router';
-import createRootReducer from './reducers';
+import { configureStore, getDefaultMiddleware } from "redux-starter-kit";
+import { createBrowserHistory } from "history";
+import { routerMiddleware } from "connected-react-router";
+import createRootReducer from "./reducers";
 
 export const history = createBrowserHistory();
 const rootReducer = createRootReducer(history);
@@ -13,8 +13,8 @@ export default function configureAppStore(preloadedState) {
     preloadedState
   });
 
-  if (process.env.NODE_ENV !== 'production' && module.hot) {
-    module.hot.accept('./reducers', () => store.replaceReducer(rootReducer));
+  if (process.env.NODE_ENV !== "production" && module.hot) {
+    module.hot.accept("./reducers", () => store.replaceReducer(rootReducer));
   }
 
   return store;

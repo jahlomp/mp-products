@@ -4,7 +4,7 @@ import {
   FETCH_PRODUCTS_FAILED
 } from "./types";
 const initialState = {
-  products: {},
+  products: JSON.parse(localStorage.getItem("mproucts")),
   fetchingProducts: false
 };
 
@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
     case FETCH_PRODUCTS_SUCCESS:
       return {
         ...state,
-        products: action.payload,
+        products: JSON.parse(localStorage.getItem("mproucts")),
         fetchingProducts: false
       };
     case FETCH_PRODUCTS_FAILED:
