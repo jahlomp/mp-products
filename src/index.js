@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import configureStore, { history } from "./store/configureAppStore";
-import App from "./App";
+import App from "./containers/App";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import "./styles/index.less";

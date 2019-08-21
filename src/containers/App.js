@@ -1,9 +1,9 @@
 import React, { Suspense, lazy } from "react";
-import Loader from "./components/Loader/Loader";
+import Loader from "../components/Loader/Loader";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 
-const Products = lazy(() => import("./pages/Products"));
+const Products = lazy(() => import("../pages/Products/Products"));
 
 const App = ({ history }) => (
   <ConnectedRouter history={history}>
