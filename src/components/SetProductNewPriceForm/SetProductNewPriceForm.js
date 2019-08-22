@@ -24,7 +24,7 @@ const SetProductNewPriceFormFC = ({ form, setNewPrice }) => {
               message: "Please provide the latest price of the product!"
             }
           ]
-        })(<Input type="number" autoFocus step="0.01" placeholder="New price" className="priceInput" />)}
+        })(<Input type="number" autoFocus step="0.01" placeholder="New price" className="set-product-latest-price-input" />)}
       </Form.Item>
       <Form.Item>
         <Button block type="primary" htmlType="submit">
