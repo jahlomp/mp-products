@@ -92,7 +92,7 @@ const add = (name, latestPrice) => {
   return new Promise((resolve, reject) => {
     try {
       let products = JSON.parse(localStorage.getItem("mproducts")) || [];
-      products.push({
+      products.unshift({
         id: products.length + 1,
         name,
         prices: [
