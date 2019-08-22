@@ -1,9 +1,25 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import Loader from "./Loader";
+import React from 'react'
+import Enzyme, { shallow } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+import Loader from './Loader'
 
-it("renders without crashing", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(<Loader />, div);
-  ReactDOM.unmountComponentAtNode(div);
-});
+Enzyme.configure({ adapter: new Adapter() })
+
+function setup() {
+  const enzymeWrapper = shallow(<Loader />)
+
+  return {
+    enzymeWrapper
+  }
+}
+
+describe('components', () => {
+  describe('Loader', () => {
+    it('should render self and child elements', () => {
+      const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.find('div').hasClass('mp-loader-wrapper')).toBe(true)
+      expect(enzymeWrapper.find('div').hasClass('mp-loader')).toBe(true)
+    })
+  })
+})
