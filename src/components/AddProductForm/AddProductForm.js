@@ -26,7 +26,7 @@ const AddProductFormFC = ({ form, addProduct }) => {
               message: "Please provide the name of the product!"
             }
           ]
-        })(<Input autoFocus />)}
+        })(<Input autoFocus placeholder="Product name" />)}
       </Form.Item>
       <Form.Item label="Latest Price">
         {getFieldDecorator("latestPrice", {
@@ -36,7 +36,7 @@ const AddProductFormFC = ({ form, addProduct }) => {
               message: "Please provide the latest price of the product!"
             }
           ]
-        })(<Input type="number" step="0.01" />)}
+        })(<Input type="number" step="0.01" placeholder="Latest price" />)}
       </Form.Item>
       <Form.Item>
         <Button block type="primary" htmlType="submit">
