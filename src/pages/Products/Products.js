@@ -9,8 +9,8 @@ import {
   addProduct
 } from "../../store/products/actions";
 import Product from "../../components/Product/Product";
-import AddProductModal from "../../components/AddProductModal/AddProductModal";
 import AddProductForm from "../../components/AddProductForm/AddProductForm";
+import ProductModal from "../../components/ProductModal/ProductModal";
 
 const Products = ({
   fetchProducts,
@@ -78,12 +78,13 @@ const Products = ({
           </Row>
         )}
       </Layout.Content>
-      <AddProductModal
+      <ProductModal
+        title="Add a new product"
         visible={showAddProductModalState}
         onCancel={handleCancel}
       >
         <AddProductForm addProduct={handleAdd} />
-      </AddProductModal>
+      </ProductModal>
     </Layout>
   );
 };

@@ -2,11 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Modal } from "antd";
 
-const AddProductModal = ({ visible, onCancel, children }) => (
+const ProductModal = ({ title, visible, onCancel, children }) => (
   <Modal
     visible={visible}
-    title="Add a new product"
-    okText="Add"
+    title={title}
     onCancel={onCancel}
     destroyOnClose={true}
     maskClosable={false}
@@ -17,14 +16,16 @@ const AddProductModal = ({ visible, onCancel, children }) => (
   </Modal>
 );
 
-AddProductModal.defaultProps = {
-  visible: false
+ProductModal.defaultProps = {
+  visible: false,
+  title: ""
 };
 
-AddProductModal.propTypes = {
+ProductModal.propTypes = {
   visible: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired
 };
 
-export default AddProductModal;
+export default ProductModal;

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Card, Button, Modal } from "antd";
 import PropTypes from "prop-types";
-import SetProductNewPriceModal from "../SetProductNewPriceModal/SetProductNewPriceModal";
 import SetProductNewPriceForm from "../SetProductNewPriceForm/SetProductNewPriceForm";
+import ProductModal from "../ProductModal/ProductModal";
 
 const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
   const [
@@ -60,13 +60,13 @@ const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
         Price: {price}
       </Card>
 
-      <SetProductNewPriceModal
+      <ProductModal
+        title={`Set new price for ${name}`}
         visible={showSetProductPriceModalState}
         onCancel={handleCancel}
-        productName={name}
       >
         <SetProductNewPriceForm setNewPrice={handleSetNewPrice} />
-      </SetProductNewPriceModal>
+      </ProductModal>
     </>
   );
 };
