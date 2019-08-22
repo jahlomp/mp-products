@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, Dropdown, Menu, Modal } from "antd";
+import { Card, Button, Modal } from "antd";
 import PropTypes from "prop-types";
 import SetProductNewPriceModal from "../SetProductNewPriceModal/SetProductNewPriceModal";
 import SetProductNewPriceForm from "../SetProductNewPriceForm/SetProductNewPriceForm";
@@ -35,33 +35,26 @@ const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
     showSetProductPriceModal(true);
   };
 
-  const hanleProductMenuClick = ({ key }) => {
-    switch (key) {
-      case "delete":
-        handleDeleteProduct(id);
-        break;
-      case "set-price":
-        handleSetProductNewPrice(id);
-        break;
-      default:
-        break;
-    }
-  };
-  const menu = (
-    <Menu onClick={hanleProductMenuClick}>
-      <Menu.Item key="set-price">Set new price</Menu.Item>
-      <Menu.Item key="delete">Delete</Menu.Item>
-    </Menu>
-  );
   return (
     <>
       <Card
         title={name}
         bordered={false}
         extra={
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <Button type="link" icon="more" />
-          </Dropdown>
+          <>
+            <Button
+              title="Set new price"
+              type="link"
+              icon="dollar"
+              onClick={e => handleSetProductNewPrice(id)}
+            />
+            <Button
+              title="Delete"
+              type="link"
+              icon="delete"
+              onClick={e => handleDeleteProduct(id)}
+            />
+          </>
         }
       >
         Price: {price}
