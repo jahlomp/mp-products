@@ -57,7 +57,7 @@ const Product = ({ id, name, price, deleteProduct, setProductNewPrice }) => {
           </>
         }
       >
-        Price: {price}
+        Price: <span className="price">{price}</span>
       </Card>
 
       <ProductModal

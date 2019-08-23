@@ -17,7 +17,11 @@ const AddProductFormFC = ({ form, addProduct }) => {
   };
 
   return (
-    <Form layout="vertical" onSubmit={handleOnSubmit}>
+    <Form
+      layout="vertical"
+      onSubmit={handleOnSubmit}
+      className="add-product-form"
+    >
       <Form.Item label="Name">
         {getFieldDecorator("name", {
           rules: [
@@ -26,7 +30,13 @@ const AddProductFormFC = ({ form, addProduct }) => {
               message: "Please provide the name of the product!"
             }
           ]
-        })(<Input autoFocus placeholder="Product name" className="add-product-name-input" />)}
+        })(
+          <Input
+            autoFocus
+            placeholder="Product name"
+            className="add-product-name-input"
+          />
+        )}
       </Form.Item>
       <Form.Item label="Latest Price">
         {getFieldDecorator("latestPrice", {
@@ -36,10 +46,22 @@ const AddProductFormFC = ({ form, addProduct }) => {
               message: "Please provide the latest price of the product!"
             }
           ]
-        })(<Input type="number" step="0.01" placeholder="Latest price" className="add-product-latest-price-input" />)}
+        })(
+          <Input
+            type="number"
+            step="0.01"
+            placeholder="Latest price"
+            className="add-product-latest-price-input"
+          />
+        )}
       </Form.Item>
       <Form.Item>
-        <Button block type="primary" htmlType="submit" className="add-product-button">
+        <Button
+          block
+          type="primary"
+          htmlType="submit"
+          className="add-product-button"
+        >
           Add
         </Button>
       </Form.Item>
