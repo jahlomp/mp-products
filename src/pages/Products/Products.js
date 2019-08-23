@@ -56,25 +56,28 @@ const Products = ({
         ) : (
           <Row gutter={16}>
             {products &&
-              [].concat(products).map((product, index) => (
-                <Col
-                  key={index}
-                  xs={24}
-                  sm={12}
-                  md={8}
-                  lg={6}
-                  xl={4}
-                  className="product-column"
-                >
-                  <Product
-                    deleteProduct={deleteProduct}
-                    setProductNewPrice={setProductNewPrice}
-                    id={product.id}
-                    name={product.name}
-                    price={product.prices[product.prices.length - 1].price}
-                  />
-                </Col>
-              ))}
+              []
+                .concat(products)
+                .filter(product => !product.deleted)
+                .map((product, index) => (
+                  <Col
+                    key={index}
+                    xs={24}
+                    sm={12}
+                    md={8}
+                    lg={6}
+                    xl={4}
+                    className="product-column"
+                  >
+                    <Product
+                      deleteProduct={deleteProduct}
+                      setProductNewPrice={setProductNewPrice}
+                      id={product.id}
+                      name={product.name}
+                      price={product.prices[product.prices.length - 1].price}
+                    />
+                  </Col>
+                ))}
           </Row>
         )}
       </Layout.Content>

@@ -24,13 +24,20 @@ export const fetchProducts = () => {
         }
       })
         .then(response => {
-          localStorage.setItem(
-            "mproducts",
-            JSON.stringify(response.data && response.data.products)
-          );
+          let products = response.data.products;
+
+          products = products.map(product => {
+            return {
+              ...product,
+              deleted: false
+            };
+          });
+          console.log(products);
+
+          localStorage.setItem("mproducts", JSON.stringify(products));
           dispatch({
             type: FETCH_PRODUCTS_SUCCESS,
-            products: response.data && response.data.products
+            products
           });
         })
         .catch(error => {
@@ -74,13 +81,14 @@ export const setProductNewPrice = (id, price) => {
 const remove = id => {
   return new Promise((resolve, reject) => {
     try {
-      const products = JSON.parse(localStorage.getItem("mproducts")) || [];
-      const otherProducts = products.filter(product => product.id !== id);
+      let products = JSON.parse(localStorage.getItem("mproducts")) || [];
+      const currectProduct = products.find(product => product.id === id);
+      const idx = products.indexOf(currectProduct);
 
-      localStorage.setItem(
-        "mproducts",
-        otherProducts.length < 1 ? null : JSON.stringify(otherProducts)
-      );
+      products[idx] = { ...currectProduct, deleted: true };
+
+      localStorage.setItem("mproducts", JSON.stringify(products));
+
       resolve(true);
     } catch (error) {
       reject(false);
@@ -99,7 +107,8 @@ const add = (name, latestPrice) => {
           {
             id: 1,
             price: parseFloat(latestPrice),
-            date: new Date()
+            date: new Date(),
+            deleted: false
           }
         ]
       });
